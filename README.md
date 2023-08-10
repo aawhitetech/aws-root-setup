@@ -16,11 +16,20 @@ This guide will walk you through the process of setting up a terraform-managemen
 2. Setup the AWS Account for Terraform Management
 
     - Create a new AWS account within the `terraform-management` OU.
-    - Sign in to the `terraform-management` AWS account.
-    - Setup an IAM user or role with administrative permissions for Terraform operations.
+3. Sign in to the `terraform-management` AWS account.
+
+    #### Cross-Account Role Switching:
+
+    - Log in to the AWS Management Console of the master account or another AWS account where you have permissions to assume a role in the Terraform-management account.
+    - Navigate to the "Services" menu and select "IAM".
+    - In the IAM dashboard, choose "Switch Role" on the upper right.
+    - Provide the details of the Terraform-management account (Account ID) and the name of the IAM role (Commonly `OrganizationAccountAccessRole`) you want to assume.
+    - Click "Switch Role". You should now be logged into the Terraform-management account with the permissions of the assumed role.
+
+4. Setup an IAM user or role with administrative permissions for Terraform operations.
     - Securely store the access and secret keys for later use in GitHub Actions.
 
-3. Configure Terraform Backend: S3 and DynamoDB
+5. Configure Terraform Backend: S3 and DynamoDB
     - S3 Bucket:
         - Create an S3 bucket to store Terraform state.
         - Enable versioning on this bucket for state history.
@@ -33,7 +42,7 @@ This guide will walk you through the process of setting up a terraform-managemen
     - IAM Permissions:
         - Grant your Terraform IAM user or role permissions to read/- - write to the S3 bucket and DynamoDB table.
 
-4. Setup GitHub Actions for CI/CD
+6. Setup GitHub Actions for CI/CD
     - Secrets: In your GitHub repository settings, add the following secrets:
         - AWS_ACCESS_KEY_ID: The access key ID of the Terraform IAM user or role.
         - AWS_SECRET_ACCESS_KEY: The secret access key of the Terraform IAM user or role.
@@ -44,7 +53,7 @@ This guide will walk you through the process of setting up a terraform-managemen
 
     - See template: [Github Workflow Terraform Template](github_workflow_terraform_template.yml)
 
-5. Implement Terraform Code for Managing OUs
+7. Implement Terraform Code for Managing OUs
 
 In your Terraform code:
 
